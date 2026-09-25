@@ -12,6 +12,12 @@ original reflective GBA LCD with the result on a KONKR Pocket ADVANCE. The
 model is split into four independently understandable parts: pixel structure,
 color response, bezel shadows and an optional environmental reflection.
 
+## Download
+
+Download the signed KPA APK and `SHA256SUMS` from the
+[latest GitHub release](https://github.com/game-de-it/gba-native-lcd/releases/latest).
+This package is supported only on KONKR Pocket ADVANCE / GT78-VN.
+
 ## Visual comparison
 
 RetroArch captures show the rendered output before it reaches the physical LCD:
