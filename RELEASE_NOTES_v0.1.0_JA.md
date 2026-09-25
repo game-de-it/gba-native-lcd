@@ -1,6 +1,7 @@
 # GBA Native LCD v0.1.0
 
-初回リリースでは、KONKR Pocket ADVANCE / GT78-VN専用プロファイルと、
+初回リリースでは、KONKR Pocket ADVANCE（Android model: GT78-VN）専用
+プロファイルと、
 加速度センサー対応のカスタムArm64版RetroArchを提供します。初代Game Boy
 Advance純正反射型液晶のドット構造、落ち着いた色応答、奥まったパネルにできる影、
 時間方向の柔らかさを再現します。本体を傾けると、影と環境光の反射帯が移動します。
@@ -16,7 +17,8 @@ Advance純正反射型液晶のドット構造、落ち着いた色応答、奥�
 
 ## KPA専用リリース
 
-本リリースは960 x 640のKONKR Pocket ADVANCE / GT78-VN専用として設計、調整、
+本リリースは960 x 640のKONKR Pocket ADVANCE（Android model: GT78-VN）専用
+として設計、調整、
 検証しています。4倍ドットマトリクス、RGB LUT、影の物理距離、センサー方向、
 AYANEO Equalizer経路はKPA固有です。他のArm64 Android端末で起動する可能性は
 ありますがサポート対象外であり、意図した表示や動きが再現できるとは限りません。

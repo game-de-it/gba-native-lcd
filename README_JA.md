@@ -15,8 +15,8 @@ CRTや現代的なIPS液晶、過度に強調されたピクセルグリッド�
 
 正式署名済みKPA用APKと`SHA256SUMS`は、
 [最新のGitHubリリース](https://github.com/game-de-it/gba-native-lcd/releases/latest)から
-ダウンロードできます。本パッケージのサポート対象はKONKR Pocket ADVANCE /
-GT78-VNのみです。
+ダウンロードできます。本パッケージのサポート対象はKONKR Pocket ADVANCE
+（Android model: GT78-VN）のみです。
 
 ## 表示比較
 
@@ -178,7 +178,8 @@ Android用コアプリセットは、mGBA起動時に自動的に読み込みま
 
 ### KPA専用リリース
 
-このAPKは**KONKR Pocket ADVANCE / GT78-VN専用**としてリリースします。
+このAPKは**KONKR Pocket ADVANCE（Android model: GT78-VN）専用**として
+リリースします。
 汎用Android表示プロファイルではありません。KPAの960 x 640パネル、GBAの
 240 x 160映像の正確な4倍表示、実測したパネル色特性、横持ち時のセンサー軸、
 AYANEOシステム音声を前提に設計しています。
@@ -215,7 +216,7 @@ AudioFlinger上の計測値は約42 msから約82 msへ増えましたが、EQ�
 ### セーブデータと注意事項
 
 APKのパッケージIDは`com.retroarch.aarch64`です。960 x 640の
-GT78-VN／KONKR Pocket ADVANCE構成を対象としています。標準版の
+KONKR Pocket ADVANCE（Android model: GT78-VN）構成を対象としています。標準版の
 `com.retroarch`とは別アプリとしてインストールされ、標準版の設定は共有しません。
 
 ユーザーデータは、アプリが管理するプライベートファイルとは別に保存されます。

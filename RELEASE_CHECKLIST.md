@@ -2,7 +2,8 @@
 
 - [x] Shader files in the APK match `variants/` byte-for-byte.
 - [x] English and Japanese README files include screenshots and save paths.
-- [x] Final release-signed build verified on KONKR Pocket ADVANCE / GT78-VN.
+- [x] Final release-signed build verified on KONKR Pocket ADVANCE (Android
+  model: GT78-VN).
 - [x] APK checksum generated in `dist/v0.1.0/SHA256SUMS`.
 - [x] RetroArch modifications committed from base `d048deca5c11d6c66321099c1bdd37c02cba2098`.
 - [x] License project-authored shader, tools and documentation under MIT while

@@ -1,6 +1,7 @@
 # GBA Native LCD v0.1.0
 
-This first release packages a KONKR Pocket ADVANCE / GT78-VN profile together
+This first release packages a KONKR Pocket ADVANCE (Android model: GT78-VN)
+profile together
 with a custom Arm64 RetroArch build. It recreates the pixel matrix, muted color
 response, recessed-panel shadows and temporal softness of the original
 reflective Game Boy Advance LCD. Accelerometer input moves the shadows and
@@ -17,8 +18,9 @@ soft environmental reflection as the handheld is tilted.
 
 ## KPA-only release
 
-This release is built, calibrated and supported only for KONKR Pocket ADVANCE /
-GT78-VN at 960 x 640. Its 4x pixel matrix, RGB LUT, physical shadow distances,
+This release is built, calibrated and supported only for KONKR Pocket ADVANCE
+(Android model: GT78-VN) at 960 x 640. Its 4x pixel matrix, RGB LUT, physical
+shadow distances,
 sensor orientation and AYANEO Equalizer path are KPA-specific. The APK may
 technically launch on another Arm64 Android device, but that use is unsupported
 and is not evidence that the intended image or motion model is reproduced.

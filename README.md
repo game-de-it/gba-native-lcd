@@ -16,7 +16,8 @@ color response, bezel shadows and an optional environmental reflection.
 
 Download the signed KPA APK and `SHA256SUMS` from the
 [latest GitHub release](https://github.com/game-de-it/gba-native-lcd/releases/latest).
-This package is supported only on KONKR Pocket ADVANCE / GT78-VN.
+This package is supported only on KONKR Pocket ADVANCE (Android model:
+GT78-VN).
 
 ## Visual comparison
 
@@ -183,7 +184,8 @@ shadows or reflection with device tilt.
 
 ### KPA-only release
 
-This APK is released specifically for the **KONKR Pocket ADVANCE / GT78-VN**.
+This APK is released specifically for the **KONKR Pocket ADVANCE (Android
+model: GT78-VN)**.
 It is not a universal Android display profile. The rendering model assumes the
 KPA's 960 x 640 panel, exact 4x presentation of the 240 x 160 GBA image,
 measured panel color response, landscape sensor axes and AYANEO system audio.
@@ -222,7 +224,8 @@ EQ either enabled or disabled.
 ### Save data and important notes
 
 The APK uses package ID `com.retroarch.aarch64` and is intended for the
-960 x 640 GT78-VN/KONKR Pocket ADVANCE configuration. It installs alongside the
+960 x 640 KONKR Pocket ADVANCE (Android model: GT78-VN) configuration. It
+installs alongside the
 stock `com.retroarch` package and does not reuse the stock app's configuration.
 
 User data is stored outside the app-private managed files:

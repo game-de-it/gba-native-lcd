@@ -5,7 +5,8 @@
 ## English
 
 The first release provides a custom Arm64 RetroArch build and reflective GBA
-LCD profile made specifically for **KONKR Pocket ADVANCE / GT78-VN**.
+LCD profile made specifically for **KONKR Pocket ADVANCE (Android model:
+GT78-VN)**.
 
 It includes a 4x pixel matrix, 256-step RGB LUT, restrained LCD response,
 recessed-bezel shadows, a soft environmental reflection, accelerometer-driven
@@ -45,7 +46,8 @@ accelerometer lighting, physical controls and release-key reinstall.
 
 ## 日本語
 
-初回リリースでは、**KONKR Pocket ADVANCE / GT78-VN専用**の反射型GBA液晶
+初回リリースでは、**KONKR Pocket ADVANCE（Android model: GT78-VN）専用**の
+反射型GBA液晶
 プロファイルと、カスタムArm64版RetroArchを提供します。
 
 4倍ドットマトリクス、256段階RGB LUT、控えめな液晶応答、ベゼルの影、柔らかな
