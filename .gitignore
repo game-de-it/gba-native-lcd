@@ -1,0 +1,28 @@
+.DS_Store
+__pycache__/
+*.pyc
+
+# Calibration workbench output is kept locally. Curated release comparisons
+# live under docs/images/.
+captures/**
+!captures/.gitkeep
+backups/
+diagnostics/
+device-presets/
+variants/centered-rect-light-map.png
+variants/gamegear-lcd-panel-cool.glsl
+
+# APKs are uploaded as GitHub Release assets rather than committed to Git.
+apk-package/
+dist/**/*.apk
+
+# Local reference photographs may have separate redistribution terms.
+reference/photos/
+
+# Superseded local prototypes kept for comparison only.
+/gba-native-lcd.glslp
+/gba-native-lcd-optics.glsl
+/gba-native-lcd-panel.glsl
+/presets/
+/shaders/
+/tools/render_yoshi_colour_study.py
