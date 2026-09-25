@@ -251,6 +251,9 @@ MPL-2.0のmGBA libretroコアも含まれます。各ライセンス本文とサ
 APK内に同梱されています。MITライセンスがこれらのライセンスを置き換えるものでは
 ありません。
 
+v0.1.0で使用したRetroArch改造ソースは、
+[game-de-itのRetroArchフォーク](https://github.com/game-de-it/RetroArch/commit/7059a84431cd5c91f417a96250aa8ef088743792)で公開しています。
+
 ## Androidコアプリセットのフォールバック
 
 このRetroArchビルドでは、ダウンロードしたシェーダーがアプリのプライベート

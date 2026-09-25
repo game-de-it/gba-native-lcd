@@ -37,6 +37,11 @@ and is not evidence that the intended image or motion model is reproduced.
 Project-authored files are MIT licensed. RetroArch remains GPL-3.0+ and the
 bundled mGBA core remains MPL-2.0; their notices are included in the APK.
 
+## Source code
+
+- [GBA Native LCD source](https://github.com/game-de-it/gba-native-lcd)
+- [Modified RetroArch source commit](https://github.com/game-de-it/RetroArch/commit/7059a84431cd5c91f417a96250aa8ef088743792)
+
 ## Release verification
 
 - APK: `RetroArch-GBA-LCD-v0.1.0-KPA-arm64.apk`

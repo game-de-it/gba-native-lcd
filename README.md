@@ -258,6 +258,9 @@ and the mGBA libretro core under MPL-2.0. Their license texts and third-party
 notices are included inside the APK. The MIT license does not replace those
 component licenses.
 
+The exact RetroArch modifications used by v0.1.0 are published in the
+[game-de-it RetroArch fork](https://github.com/game-de-it/RetroArch/commit/7059a84431cd5c91f417a96250aa8ef088743792).
+
 ## Android core-preset fallback
 
 This RetroArch build stores downloaded shaders in app-private storage and may

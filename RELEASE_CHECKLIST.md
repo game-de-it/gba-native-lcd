@@ -14,5 +14,5 @@
   saves and states.
 - [x] Verify GBA launch, shader rendering, accelerometer lighting and physical
   button input on the target device.
-- [ ] Publish the modified RetroArch source commit and link it from the release.
+- [x] Publish the modified RetroArch source commit and link it from the release.
 - [ ] Upload the signed APK and matching checksum to the GitHub release.
