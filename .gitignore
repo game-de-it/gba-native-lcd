@@ -15,6 +15,7 @@ variants/gamegear-lcd-panel-cool.glsl
 # APKs are uploaded as GitHub Release assets rather than committed to Git.
 apk-package/
 dist/**/*.apk
+device-backups/
 
 # Local reference photographs may have separate redistribution terms.
 reference/photos/

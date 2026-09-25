@@ -2,13 +2,17 @@
 
 - [x] Shader files in the APK match `variants/` byte-for-byte.
 - [x] English and Japanese README files include screenshots and save paths.
-- [x] Final development build verified on KONKR Pocket ADVANCE / GT78-VN.
+- [x] Final release-signed build verified on KONKR Pocket ADVANCE / GT78-VN.
 - [x] APK checksum generated in `dist/v0.1.0/SHA256SUMS`.
 - [x] RetroArch modifications committed from base `d048deca5c11d6c66321099c1bdd37c02cba2098`.
-- [ ] Choose and document a redistribution license for project-authored shader,
-  documentation and photographs.
-- [ ] Create and securely back up a persistent Android release keystore.
-- [ ] Rebuild and sign the APK with that release key.
-- [ ] Verify an in-place update using two consecutively signed test versions.
+- [x] License project-authored shader, tools and documentation under MIT while
+  preserving RetroArch GPL-3.0+ and mGBA MPL-2.0 notices.
+- [x] Create a persistent Android release keystore and record its public
+  certificate fingerprint in `SIGNING_CERTIFICATE.md`.
+- [x] Rebuild and sign the APK with that release key.
+- [x] Verify release-key in-place reinstall while preserving `retroarch.cfg`,
+  saves and states.
+- [x] Verify GBA launch, shader rendering, accelerometer lighting and physical
+  button input on the target device.
 - [ ] Publish the modified RetroArch source commit and link it from the release.
 - [ ] Upload the signed APK and matching checksum to the GitHub release.

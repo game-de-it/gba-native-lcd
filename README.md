@@ -164,19 +164,23 @@ the calibrated configuration. It installs the managed shader files in the
 application-private directory and applies the mGBA core preset automatically.
 Saves, states, screenshots and playlists remain in writable shared storage.
 
+The launcher icon uses a blue background (`RGB 48, 65, 160`) so this build can
+be distinguished from the stock RetroArch icon. Depending on the launcher, the
+app label may be shortened; the blue icon identifies **RetroArch GBA LCD**.
+
+![KPA home screen showing the blue RetroArch GBA LCD icon beside stock RetroArch](docs/images/kpa-home-retroarch-icon.png)
+
 Sensor-driven lighting requires the bundled RetroArch build because it adds
 accelerometer uniforms to the GLSL pipeline. A standard RetroArch build can
 still render the preset's fixed-light fallback, but cannot move the bezel
 shadows or reflection with device tilt.
 
-### Device compatibility
+### KPA-only release
 
-The current release is a **KONKR Pocket ADVANCE / GT78-VN profile**, rather
-than a universal Android display profile. The APK is not product-locked and
-may run on another device when it has Arm64 Android, OpenGL ES, an
-accelerometer and a compatible landscape control layout. However, an accurate
-result additionally depends on a 960 x 640 panel, exact 4x presentation of the
-240 x 160 GBA image, comparable panel color response and matching sensor axes.
+This APK is released specifically for the **KONKR Pocket ADVANCE / GT78-VN**.
+It is not a universal Android display profile. The rendering model assumes the
+KPA's 960 x 640 panel, exact 4x presentation of the 240 x 160 GBA image,
+measured panel color response, landscape sensor axes and AYANEO system audio.
 
 On a different resolution, the shader still renders, but the 4x4 cell model
 and pixel-based shadow distances no longer represent the intended physical
@@ -184,8 +188,11 @@ scale. A different panel also needs its own color LUT. Sensor axes may need to
 be swapped or inverted. AYANEO Equalizer support only applies to firmware that
 provides the compatible Android Dynamics Processing effect.
 
-In short: KPA is verified; other Arm64 Android handhelds are experimental and
-should receive a separate device profile after physical testing.
+The package does not contain an artificial product-name lock, so it might
+launch on another Arm64 Android device. Such use is unsupported: visual
+accuracy, sensor direction, controls, performance and system EQ integration
+are not guaranteed. Other handhelds should receive a separately calibrated
+device profile and their own physical-device validation.
 
 ### AYANEO Equalizer compatibility
 
@@ -234,13 +241,22 @@ clearing application storage. Never delete `RetroArch-gyrotest` when it contains
 saves or BIOS files that have not been backed up.
 
 Android only accepts an in-place update when the new APK uses the same signing
-key. The current local build uses the development key; a public release should
-use one persistent release key for every version. Installing a differently
-signed build requires uninstalling the existing package first, which can remove
+key. The v0.1.0 release APK is signed with the project's persistent release
+certificate documented in [`SIGNING_CERTIFICATE.md`](SIGNING_CERTIFICATE.md).
+Every future version must use this same private key. Installing over an older
+development-signed test build requires uninstalling it first, which can remove
 the package-specific configuration described above.
 
-Release preparation status and remaining signing/licensing work are tracked in
+Release preparation status and remaining publication work are tracked in
 [`RELEASE_CHECKLIST.md`](RELEASE_CHECKLIST.md).
+
+## License
+
+Project-authored shader code, tools and documentation are released under the
+[MIT License](LICENSE). The bundled APK also contains RetroArch under GPL-3.0+
+and the mGBA libretro core under MPL-2.0. Their license texts and third-party
+notices are included inside the APK. The MIT license does not replace those
+component licenses.
 
 ## Android core-preset fallback
 
