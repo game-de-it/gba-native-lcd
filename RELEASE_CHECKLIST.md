@@ -17,4 +17,4 @@
   button input on the target device.
 - [x] Publish the modified RetroArch source commit and link it from the release.
 - [x] Upload the signed APK and matching checksum to the GitHub release.
-- [ ] Upload the bilingual shader-only ZIP and refresh `SHA256SUMS`.
+- [x] Upload the bilingual shader-only ZIP and refresh `SHA256SUMS`.
