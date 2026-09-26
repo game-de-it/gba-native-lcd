@@ -19,6 +19,11 @@ Download the signed KPA APK and `SHA256SUMS` from the
 This package is supported only on KONKR Pocket ADVANCE (Android model:
 GT78-VN).
 
+Users who only need the shader can download
+`GBA-Native-LCD-Shader-v0.1.0.zip` from the same release or inspect the
+[`variants/` directory](https://github.com/game-de-it/gba-native-lcd/tree/main/variants).
+Read the included compatibility notes before using it on another device.
+
 ## Visual comparison
 
 RetroArch captures show the rendered output before it reaches the physical LCD:
@@ -216,10 +221,11 @@ requests an effect-capable OpenSL performance mode, allowing AYASpace's Android
 48 kHz. The EQ must still be enabled and configured in AYASpace; it is not
 implemented or bundled by this APK.
 
-The effect-capable path reports a larger audio buffer than the original fast
-path. Testing measured approximately 82 ms instead of 42 ms in AudioFlinger,
-although no perceptible audio delay was reported during normal play with the
-EQ either enabled or disabled.
+The effect-capable path reports a larger mixer-buffer duration than the
+original fast path: approximately 82 ms instead of 42 ms in AudioFlinger. This
+is not a measured end-to-end output delay and does not mean that every sound is
+always delayed by 82 ms. No perceptible difference was reported during normal
+play with the EQ either enabled or disabled.
 
 ### Save data and important notes
 

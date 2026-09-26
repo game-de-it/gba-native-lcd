@@ -30,6 +30,16 @@ AYANEO Equalizer経路はKPA固有です。他のArm64 Android端末で起動す
   `/storage/emulated/0/RetroArch-gyrotest/`以下へ保存されます。
 - 今後の更新には同じ正式署名鍵が必要です。
 
+## シェーダー専用パッケージ
+
+`GBA-Native-LCD-Shader-v0.1.0.zip`には、必須の7つのGLSL／LUTファイル、
+英語・日本語の説明、MITライセンスだけが含まれます。標準RetroArchでも`gl`
+ビデオドライバーで読み込めますが、傾き連動光源には専用APKが必要です。
+
+本プロファイルは960 x 640液晶とGBAの正確な4倍表示を前提としています。別端末では
+表示倍率、パネル色、影のピクセル距離、センサー対応、GPU性能の違いにより、格子の
+不均一、色の変化、固定光源、速度低下が発生する可能性があります。
+
 ## ライセンスとソース
 
 本プロジェクト独自部分はMIT Licenseです。RetroArchはGPL-3.0+、同梱mGBAコアは
@@ -42,6 +52,8 @@ MPL-2.0のままで、ライセンス通知はAPK内に同梱されています�
 
 - APK: `RetroArch-GBA-LCD-v0.1.0-KPA-arm64.apk`
 - SHA-256: `caeb535c8947a745a0903b381ec1b2aa0dc58557231f8bb32fc037f9aa6b1fe0`
+- シェーダーZIP SHA-256:
+  `6e32bd614374e44b85ab25f48850f1c9eaaeee11156352e4169db1cf7b2fb521`
 - バージョン: `1.22.2_GBA_LCD_0.1.0`
 - ABI: `arm64-v8a`
 

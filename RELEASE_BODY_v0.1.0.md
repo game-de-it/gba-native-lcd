@@ -25,6 +25,19 @@ identifies this build. Back up `retroarch.cfg` before uninstalling or clearing
 app data. Saves, states and screenshots remain under
 `/storage/emulated/0/RetroArch-gyrotest/`.
 
+### Shader-only download
+
+`GBA-Native-LCD-Shader-v0.1.0.zip` contains the seven required GLSL/LUT files,
+MIT license and bilingual installation notes. It can be loaded by standard
+RetroArch with the `gl` video driver, but tilt-driven lighting requires the
+custom APK.
+
+The shader is calibrated for the KPA's 960 x 640 panel and exact 4x GBA scale.
+On another device, different output scale, panel color, pixel-based shadow
+distances, missing sensor uniforms or GPU performance may cause uneven grids,
+incorrect colors, static lighting or slowdown. Successful loading alone does
+not mean the KPA-calibrated appearance is reproduced.
+
 ### Source and licenses
 
 - [GBA Native LCD source](https://github.com/game-de-it/gba-native-lcd)
@@ -38,6 +51,8 @@ app data. Saves, states and screenshots remain under
 - APK version: `1.22.2_GBA_LCD_0.1.0`
 - ABI: `arm64-v8a`
 - SHA-256: `caeb535c8947a745a0903b381ec1b2aa0dc58557231f8bb32fc037f9aa6b1fe0`
+- Shader ZIP SHA-256:
+  `6e32bd614374e44b85ab25f48850f1c9eaaeee11156352e4169db1cf7b2fb521`
 
 The signed APK was verified on GT78-VN for GBA launch, shader rendering,
 accelerometer lighting, physical controls and release-key reinstall.
@@ -66,6 +81,17 @@ accelerometer lighting, physical controls and release-key reinstall.
 `retroarch.cfg`をバックアップしてください。セーブ、ステート、スクリーンショットは
 `/storage/emulated/0/RetroArch-gyrotest/`以下へ保存されます。
 
+### シェーダーのみのダウンロード
+
+`GBA-Native-LCD-Shader-v0.1.0.zip`には、必須の7つのGLSL／LUTファイル、
+MITライセンス、英語・日本語の導入説明が含まれます。標準RetroArchでも`gl`
+ビデオドライバーで読み込めますが、傾き連動光源には専用APKが必要です。
+
+本シェーダーはKPAの960 x 640液晶とGBAの正確な4倍表示に合わせて調整しています。
+別端末では、表示倍率、パネル色、ピクセル単位の影距離、センサーuniformの有無、
+GPU性能の違いにより、格子の不均一、色の変化、固定光源、速度低下が発生する可能性が
+あります。読み込みに成功しても、KPA向けの見え方が再現できたとは限りません。
+
 ### ソースとライセンス
 
 - [GBA Native LCDソース](https://github.com/game-de-it/gba-native-lcd)
@@ -79,6 +105,8 @@ accelerometer lighting, physical controls and release-key reinstall.
 - APKバージョン: `1.22.2_GBA_LCD_0.1.0`
 - ABI: `arm64-v8a`
 - SHA-256: `caeb535c8947a745a0903b381ec1b2aa0dc58557231f8bb32fc037f9aa6b1fe0`
+- シェーダーZIP SHA-256:
+  `6e32bd614374e44b85ab25f48850f1c9eaaeee11156352e4169db1cf7b2fb521`
 
 正式署名APKをGT78-VNへ導入し、GBA起動、シェーダー表示、加速度センサー連動光源、
 物理ボタン、正式鍵による上書き再インストールを確認済みです。

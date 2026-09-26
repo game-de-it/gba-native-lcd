@@ -34,6 +34,17 @@ and is not evidence that the intended image or motion model is reproduced.
   and its credentials backed up securely; losing them prevents in-place APK
   updates.
 
+## Shader-only package
+
+`GBA-Native-LCD-Shader-v0.1.0.zip` contains only the seven required GLSL/LUT
+files, bilingual instructions and the MIT license. Standard RetroArch can load
+it with the `gl` video driver, but tilt-driven lighting requires the custom APK.
+
+The profile assumes a 960 x 640 panel and exact 4x GBA scaling. Different
+scale, panel color response, shadow pixel distances, sensor support and GPU
+performance can produce uneven grids, incorrect colors, static lighting or
+slowdown on other devices.
+
 ## Licensing
 
 Project-authored files are MIT licensed. RetroArch remains GPL-3.0+ and the
@@ -48,6 +59,8 @@ bundled mGBA core remains MPL-2.0; their notices are included in the APK.
 
 - APK: `RetroArch-GBA-LCD-v0.1.0-KPA-arm64.apk`
 - SHA-256: `caeb535c8947a745a0903b381ec1b2aa0dc58557231f8bb32fc037f9aa6b1fe0`
+- Shader ZIP SHA-256:
+  `6e32bd614374e44b85ab25f48850f1c9eaaeee11156352e4169db1cf7b2fb521`
 - Version: `1.22.2_GBA_LCD_0.1.0`
 - ABI: `arm64-v8a`
 - Signing certificate SHA-256:
