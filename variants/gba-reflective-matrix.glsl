@@ -1,12 +1,13 @@
 /*
- * GBA reflective LCD, pass 2: exact 4x4 logical-cell matrix for a 960x640
+ * GBA reflective LCD, pass 2: 4x8 reflective-cell matrix for a 960x640
  * target. B/G/R transmission differences are intentionally subtle. The
- * fourth column and row form the opaque matrix boundary for each GBA dot.
+ * emitting face has a vertical Gaussian profile while matrix lines stay fixed.
  */
 
 #pragma parameter MATRIX_FACE "Cell Transmission" 1.00 0.80 1.35 0.01
 #pragma parameter MATRIX_GAP "Opaque Matrix" 0.66 0.40 1.00 0.01
 #pragma parameter SUBPIXEL_STRENGTH "BGR Filter Strength" 0.22 0.00 0.70 0.01
+#pragma parameter DOT_ROUNDING "Elliptical Cell Face" 1.00 0.00 1.00 0.05
 #pragma parameter TOP_EDGE_LIGHT "Top Edge Light" 0.10 0.00 1.00 0.01
 #pragma parameter SHADOW_START_LIGHT "Light at 30px" 0.30 0.10 1.00 0.01
 #pragma parameter BOTTOM_LIGHT "Bottom Reflected Light" 1.80 1.00 2.00 0.01
@@ -21,11 +22,11 @@
 #pragma parameter SENSOR_EDGE_DARKNESS "Moving Shadow Root" 0.25 0.05 0.60 0.01
 #pragma parameter SENSOR_STRETCHED_DARKNESS "Stretched Shadow Root" 0.10 0.02 0.40 0.01
 #pragma parameter SENSOR_FAR_LIGHT "Light Beyond Shadow" 1.00 1.00 2.50 0.05
-#pragma parameter BAND_LIGHT "Soft Reflection Band Light" 1.80 1.00 2.00 0.05
+#pragma parameter BAND_LIGHT "Soft Reflection Band Light" 1.30 1.00 2.00 0.05
 #pragma parameter BAND_WIDTH "Band Horizontal Half Width" 0.46 0.20 0.49 0.01
 #pragma parameter BAND_HEIGHT "Band Vertical Spread" 0.168 0.050 0.350 0.001
 #pragma parameter BAND_TRAVEL "Band Motion Range" 0.30 0.00 0.40 0.01
-#pragma parameter INNER_BAND_LIGHT "Inner Reflection Band Light" 1.65 1.00 2.00 0.05
+#pragma parameter INNER_BAND_LIGHT "Inner Reflection Band Light" 1.25 1.00 2.00 0.05
 #pragma parameter INNER_BAND_WIDTH "Inner Band Core Half Width" 0.16 0.05 0.35 0.01
 #pragma parameter INNER_BAND_HEIGHT "Inner Band Core Half Height" 0.04 0.01 0.15 0.01
 #pragma parameter INNER_BAND_FADE_WIDTH "Inner Band Fade Half Width" 0.38 0.15 0.46 0.01
@@ -62,6 +63,7 @@ uniform vec2 OutputSize;
 uniform float MATRIX_FACE;
 uniform float MATRIX_GAP;
 uniform float SUBPIXEL_STRENGTH;
+uniform float DOT_ROUNDING;
 uniform float TOP_EDGE_LIGHT;
 uniform float SHADOW_START_LIGHT;
 uniform float BOTTOM_LIGHT;
@@ -113,7 +115,10 @@ float edge_shadow(float distance, float reach)
 void main(void)
 {
     vec3 colour = texture2D(Texture, tex_coord).rgb;
-    vec2 phase = fract(tex_coord * TextureSize);
+    vec2 phase = vec2(
+        fract(tex_coord.x * TextureSize.x),
+        fract(tex_coord.y * TextureSize.y * 0.5)
+    );
 
     float blue = 1.0 - step(0.25, phase.x);
     float green = step(0.25, phase.x) - step(0.50, phase.x);
@@ -129,6 +134,14 @@ void main(void)
     bgr_filter = mix(vec3(1.0), bgr_filter, SUBPIXEL_STRENGTH);
 
     float matrix = mix(MATRIX_FACE, 1.0 - MATRIX_GAP, boundary);
+    vec2 face_uv = phase / 0.75;
+    vec2 ellipse_position = (face_uv - vec2(0.5)) / 0.5;
+    float radius_squared = dot(ellipse_position, ellipse_position);
+    float matrix_floor = clamp(1.0 - MATRIX_GAP, 0.0, 1.0);
+    float ellipse = matrix_floor + (1.0 - matrix_floor) *
+        exp(-2.20 * radius_squared);
+    float face_gain = mix(1.0, ellipse, DOT_ROUNDING);
+    face_gain = mix(face_gain, 1.0, boundary);
     // RetroArch may allocate a power-of-two backing texture larger than the
     // active image. TexCoord then stops below 1.0 on the right/bottom edges.
     // Convert it to active-image coordinates before placing physical-panel
@@ -168,9 +181,13 @@ void main(void)
                           max(tilt_y, 0.0)) * (1.0 - max(-tilt_y, 0.0));
     float bottom_reach = mix(SIDE_WIDTH_PX, SENSOR_MAX_EDGE_SHADOW,
                              max(-tilt_y, 0.0)) * (1.0 - max(tilt_y, 0.0));
-    float left_reach = mix(SIDE_WIDTH_PX, SENSOR_MAX_EDGE_SHADOW,
+    // Horizontal tilt is visually stronger on the wide 3:2 panel. Keep the
+    // neutral 30px side shadow and cap its tilt-driven reach at 80px.
+    float horizontal_max_reach = mix(SIDE_WIDTH_PX,
+                                     SENSOR_MAX_EDGE_SHADOW, 0.333333);
+    float left_reach = mix(SIDE_WIDTH_PX, horizontal_max_reach,
                            max(-tilt_x, 0.0)) * (1.0 - max(tilt_x, 0.0));
-    float right_reach = mix(SIDE_WIDTH_PX, SENSOR_MAX_EDGE_SHADOW,
+    float right_reach = mix(SIDE_WIDTH_PX, horizontal_max_reach,
                             max(tilt_x, 0.0)) * (1.0 - max(-tilt_x, 0.0));
 
     float column = floor(content_uv.x * OutputSize.x);
@@ -238,7 +255,7 @@ void main(void)
     float side_light = mix(SIDE_EDGE_LIGHT, 1.0, side_t);
     ambient *= mix(side_light, 1.0, use_sensor);
 
-    gl_FragColor = vec4(clamp(colour * bgr_filter * matrix * ambient,
+    gl_FragColor = vec4(clamp(colour * face_gain * bgr_filter * matrix * ambient,
                               0.0, 1.0), 1.0);
 }
 

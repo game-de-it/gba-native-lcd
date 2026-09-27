@@ -1,20 +1,22 @@
-# v0.1.0 release checklist
+# v0.1.1 release checklist
 
-- [x] Shader files in the APK match `variants/` byte-for-byte.
-- [x] English and Japanese README files include screenshots and save paths.
-- [x] Final release-signed build verified on KONKR Pocket ADVANCE (Android
-  model: GT78-VN).
-- [x] APK checksum generated in `dist/v0.1.0/SHA256SUMS`.
-- [x] RetroArch modifications committed from base `d048deca5c11d6c66321099c1bdd37c02cba2098`.
-- [x] License project-authored shader, tools and documentation under MIT while
-  preserving RetroArch GPL-3.0+ and mGBA MPL-2.0 notices.
-- [x] Create a persistent Android release keystore and record its public
-  certificate fingerprint in `SIGNING_CERTIFICATE.md`.
-- [x] Rebuild and sign the APK with that release key.
-- [x] Verify release-key in-place reinstall while preserving `retroarch.cfg`,
-  saves and states.
-- [x] Verify GBA launch, shader rendering, accelerometer lighting and physical
-  button input on the target device.
-- [x] Publish the modified RetroArch source commit and link it from the release.
-- [x] Upload the signed APK and matching checksum to the GitHub release.
-- [x] Upload the bilingual shader-only ZIP and refresh `SHA256SUMS`.
+- [x] Final `native-lcd-v0.1.1` shader files match the APK bootstrap assets
+  byte-for-byte.
+- [x] Legacy `native-lcd-v0.1.0` remains bundled and unchanged for comparison.
+- [x] Default mGBA core preset references
+  `/storage/emulated/0/RetroArch/shaders/native-lcd-v0.1.1/`.
+- [x] Shared shader browser root is
+  `/storage/emulated/0/RetroArch/shaders/`.
+- [x] English and Japanese documentation includes the final comparison images,
+  shader paths, save paths, update behavior and KPA-only scope.
+- [x] User completed final physical verification of the shader on KONKR Pocket
+  ADVANCE before release preparation.
+- [x] Rebuild the Arm64 APK with the final shader assets.
+- [x] Sign with the persistent release certificate and verify its fingerprint.
+- [x] Verify APK package name, version, ABI and embedded shader assets.
+- [x] Build and test the bilingual shader-only ZIP.
+- [x] Generate and verify `SHA256SUMS` for every release asset.
+- [ ] Commit and push the shader repository. The modified RetroArch source is
+  published at `06cc964`.
+- [ ] Publish the bilingual GitHub v0.1.1 release and upload all assets.
+- [ ] Read back the public release metadata and asset checksums.

@@ -20,7 +20,7 @@ This package is supported only on KONKR Pocket ADVANCE (Android model:
 GT78-VN).
 
 Users who only need the shader can download
-`GBA-Native-LCD-Shader-v0.1.0.zip` from the same release or inspect the
+`GBA-Native-LCD-Shader-v0.1.1.zip` from the same release or inspect the
 [`variants/` directory](https://github.com/game-de-it/gba-native-lcd/tree/main/variants).
 Read the included compatibility notes before using it on another device.
 
@@ -39,20 +39,40 @@ surface reflection and camera response.
 
 ![Physical comparison: shader OFF above and shader ON below](docs/images/physical-comparison-shader-off-on.jpeg)
 
+### Shader and original reflective LCD
+
+The following close-ups compare the finished shader on the left with a
+photograph of an original reflective GBA LCD on the right.
+
+![Left: v0.1.1 shader. Right: original reflective GBA LCD](docs/images/v0.1.1-shader-vs-reflective-lcd-overview.png)
+
+![Left: detailed v0.1.1 shader crop. Right: detailed original reflective GBA LCD crop](docs/images/v0.1.1-shader-vs-reflective-lcd-detail.png)
+
+The emitting cells in the shader are intentionally a little brighter, and the
+color is slightly different from the photographed panel. This is caused by
+the moving environmental reflection band: it restores some luminance after
+the strongly compressed color LUT and represents reflected ambient light on
+the panel rather than a backlight. The reference photograph also includes its
+own illumination and camera response, so it is a visual target rather than a
+pixel-identical digital source.
+
 ## Display model
 
 ### 1. Pixel structure
 
 The 240 x 160 GBA image maps exactly to the target's 960 x 640 panel. Each GBA
-pixel therefore occupies a stable 4 x 4 output-pixel cell. Three columns carry
-subtle B, G and R transmission biases; the fourth column and fourth row form
-the dark matrix boundary between cells.
+pixel therefore occupies a stable 4 x 4 output block. The final optical mask
+uses a 4 x 8 repeating cell period: three columns carry subtle B, G and R
+transmission biases, while the fourth column and alternating row boundary form
+a dark matrix. A Gaussian attenuation shapes only the emitting face into a
+vertical oval without softening the fixed black matrix.
 
 | Parameter | Default | Purpose |
 | --- | ---: | --- |
 | `MATRIX_FACE` | `1.00` | Transmission through the active cell face |
 | `MATRIX_GAP` | `0.66` | Reduces the matrix boundary to 34% transmission |
 | `SUBPIXEL_STRENGTH` | `0.22` | Keeps BGR separation visible but restrained |
+| `DOT_ROUNDING` | `1.00` | Applies the accepted vertical oval attenuation to emitting cells |
 | `SRC_BLEND` | `0.04` | Shares 4% of the source-cell color with direct neighbors |
 | `OPTICS_CHROMA` | `0.04` | Small color crosstalk in the cover layer |
 | `OPTICS_LUMA` | `0.02` | Smaller luminance crosstalk in the cover layer |
@@ -93,10 +113,11 @@ therefore models light falling on a recessed panel instead of adding an
 emissive lamp curve.
 
 With sensor lighting enabled, a face-up device starts with a 30-pixel shadow
-around all four edges. Tilting the device can extend the raised-edge shadow to
-180 pixels while allowing the opposite shadow to disappear. Its root begins at
-a `0.25` light multiplier and reaches `0.10` at maximum extension. The lower
-panel reflection rises from `1.00` to `1.80`.
+around all four edges. Tilting the device can extend the top or bottom shadow
+to 180 pixels and the left or right shadow to 80 pixels, while allowing the
+opposite shadow to disappear. Its root begins at a `0.25` light multiplier and
+reaches `0.10` at maximum extension. The lower panel reflection rises from
+`1.00` to `1.80`.
 
 Accelerometer input uses no dead zone and a `0.20` low-pass coefficient. This
 keeps the shadow responsive while suppressing flicker from button presses and
@@ -116,18 +137,18 @@ hard rectangular boundary and moves with device tilt.
 
 | Parameter | Default | Purpose |
 | --- | ---: | --- |
-| `BAND_LIGHT` | `1.80` | Peak gain of the broad reflection |
+| `BAND_LIGHT` | `1.30` | Peak gain of the broad reflection |
 | `BAND_WIDTH` | `0.46` | Horizontal half-width of the broad band |
 | `BAND_HEIGHT` | `0.168` | Gaussian vertical spread |
 | `BAND_TRAVEL` | `0.30` | Maximum normalized movement with tilt |
-| `INNER_BAND_LIGHT` | `1.65` | Absolute light level of the softer inner region |
+| `INNER_BAND_LIGHT` | `1.25` | Absolute light level of the softer inner region |
 | `INNER_BAND_WIDTH` | `0.16` | Inner core horizontal half-width |
 | `INNER_BAND_HEIGHT` | `0.04` | Inner core vertical half-height |
 | `INNER_BAND_FADE_WIDTH` | `0.38` | Horizontal fade extent |
 | `INNER_BAND_FADE_HEIGHT` | `0.14` | Vertical fade extent |
 
-The inner region converges to an absolute `1.65` instead of multiplying the
-outer `1.80` gain. This prevents the center from becoming a clipped white bar
+The inner region converges to an absolute `1.25` instead of multiplying the
+outer `1.30` gain. This prevents the center from becoming a clipped white bar
 and gives the reflection a less uniform surface. For a stricter panel-only
 presentation, set both `BAND_LIGHT` and `INNER_BAND_LIGHT` to `1.00` to disable
 the reflection without changing the matrix, LUT or bezel-shadow model.
@@ -142,12 +163,13 @@ shader.
 
 ## Contents
 
-- `variants/gba-reflective-v2.glslp`: current five-pass release preset
+- `variants/gba-reflective-v2.glslp`: current six-pass release preset
 - `variants/rgb-curve-lut.glsl`: 256-step RGB color correction
 - `variants/gba-reflective-ghost.glsl`: temporal LCD response
 - `variants/gba-reflective-response.glsl`: source-cell optical response
 - `variants/gba-reflective-matrix.glsl`: BGR matrix, shadows and reflections
 - `variants/gba-reflective-optics.glsl`: final cover-layer crosstalk
+- `variants/reflective-column-e.glsl`: optional final reflective texture pass
 - `reference/device-profile.md`: measured target-device configuration
 - `reference/tuning-notes.md`: visual intent and parameter guide
 - `reference/photos/`: user-provided photographs of an original GBA SP LCD
@@ -158,7 +180,7 @@ shader.
 
 For manual testing, place the files from `variants/` together under:
 
-`/storage/emulated/0/RetroArch/shaders/gba-reflective-v2/`
+`/storage/emulated/0/RetroArch/shaders/native-lcd-v0.1.1/`
 
 Load `gba-reflective-v2.glslp` from RetroArch's **Load Preset** command. The
 preset, LUT and shaders must remain in the same directory. The Android core
@@ -171,10 +193,12 @@ Illumination is a directional reflected-light field with an upper bezel shadow.
 
 ## Release APK integration
 
-The release APK includes the five-pass preset, LUT, mGBA core, menu assets and
-the calibrated configuration. It installs the managed shader files in the
-application-private directory and applies the mGBA core preset automatically.
-Saves, states, screenshots and playlists remain in writable shared storage.
+The release APK includes the six-pass preset, LUT, mGBA core, menu assets and
+the calibrated configuration. Managed shader files are installed into the
+shared shader browser at `/storage/emulated/0/RetroArch/shaders/`. The default
+`native-lcd-v0.1.1` preset is applied automatically for mGBA, while the legacy
+`native-lcd-v0.1.0` preset remains selectable for comparison. Saves, states,
+screenshots and playlists remain in writable shared storage.
 
 The launcher icon uses a blue background (`RGB 48, 65, 160`) so this build can
 be distinguished from the stock RetroArch icon. Depending on the launcher, the
@@ -195,7 +219,7 @@ It is not a universal Android display profile. The rendering model assumes the
 KPA's 960 x 640 panel, exact 4x presentation of the 240 x 160 GBA image,
 measured panel color response, landscape sensor axes and AYANEO system audio.
 
-On a different resolution, the shader still renders, but the 4x4 cell model
+On a different resolution, the shader still renders, but the 4 x 8 optical cell model
 and pixel-based shadow distances no longer represent the intended physical
 scale. A different panel also needs its own color LUT. Sensor axes may need to
 be swapped or inverted. AYANEO Equalizer support only applies to firmware that
@@ -273,19 +297,19 @@ and the mGBA libretro core under MPL-2.0. Their license texts and third-party
 notices are included inside the APK. The MIT license does not replace those
 component licenses.
 
-The exact RetroArch modifications used by v0.1.0 are published in the
-[game-de-it RetroArch fork](https://github.com/game-de-it/RetroArch/commit/7059a84431cd5c91f417a96250aa8ef088743792).
+The exact RetroArch modifications used by v0.1.1 are published in the
+[game-de-it RetroArch fork](https://github.com/game-de-it/RetroArch/commit/06cc9643c70a8ad3197259c24110eda32773eef6).
 
 ## Android core-preset fallback
 
-This RetroArch build stores downloaded shaders in app-private storage and may
-not enumerate external `.glslp` files in its picker. In that case, install
-`core-presets/mGBA/gba.glslp` as:
+This build installs the selectable presets under
+`/storage/emulated/0/RetroArch/shaders/`. If a core-specific preset must be
+restored manually, install `core-presets/mGBA/gba.glslp` as:
 
 `/storage/emulated/0/RetroArch/config/mGBA/gba.glslp`
 
-It references the external project preset by absolute path and applies it when
-mGBA content starts. The previous core preset is kept in
+It references `native-lcd-v0.1.1` by absolute path and applies it when mGBA
+content starts. The previous core preset is kept in
 `backups/gba-online-updater.glslp`.
 
 ## macOS preview

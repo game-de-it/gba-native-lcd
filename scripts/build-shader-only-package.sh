@@ -16,6 +16,7 @@ for file in \
     gba-reflective-optics.glsl \
     gba-reflective-response.glsl \
     gba-reflective-v2.glslp \
+    reflective-column-e.glsl \
     rgb-curve-lut.glsl \
     rgb_curve_lut.png
 do

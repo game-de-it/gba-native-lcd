@@ -177,7 +177,14 @@ def optics_pass(image: np.ndarray, p: dict[str, float]) -> np.ndarray:
     return np.clip(output_luma[..., None] + output_chroma, 0.0, 1.0)
 
 
-def reflective_v2_pass(source: np.ndarray, p: dict[str, float], scale: int) -> np.ndarray:
+def reflective_v2_pass(
+    source: np.ndarray,
+    p: dict[str, float],
+    scale: int,
+    matrix_period_y: int | None = None,
+    matrix_bleed: float = 0.0,
+    dot_rounding: float = 0.0,
+) -> np.ndarray:
     neighbours = (
         shifted_edge(source, -1, 0)
         + shifted_edge(source, 1, 0)
@@ -258,7 +265,8 @@ def reflective_v2_pass(source: np.ndarray, p: dict[str, float], scale: int) -> n
     output = np.repeat(np.repeat(colour, scale, axis=0), scale, axis=1)
     height, width = output.shape[:2]
     phase_x = np.mod((np.arange(width, dtype=np.float32) + 0.5) / scale, 1.0)
-    phase_y = np.mod((np.arange(height, dtype=np.float32) + 0.5) / scale, 1.0)
+    period_y = matrix_period_y if matrix_period_y is not None else scale
+    phase_y = np.mod((np.arange(height, dtype=np.float32) + 0.5) / period_y, 1.0)
     band = np.floor(phase_x * 4.0).astype(np.int32)
 
     filters = np.ones((width, 3), dtype=np.float32)
@@ -305,14 +313,36 @@ def reflective_v2_pass(source: np.ndarray, p: dict[str, float], scale: int) -> n
         1.0 - p.get("SIDE_EDGE_LIGHT", 1.0)
     ) * side_t
     light = ambient[:, None] * side_light[None, :]
-    return np.clip(
-        output
-        * filters[None, ...]
-        * matrix[..., None]
-        * light[..., None],
-        0.0,
-        1.0,
-    )
+    base = output * filters[None, ...] * light[..., None]
+    if dot_rounding > 0.0:
+        # Keep the matrix boundary untouched. Only soften the emitting face,
+        # using an elliptical falloff inside each 4x8 display cell.
+        cell_x = phase_x / 0.75
+        cell_y = phase_y / 0.75
+        radius_x = (cell_x - 0.5) / 0.5
+        radius_y = (cell_y - 0.5) / 0.5
+        radius_squared = radius_y[:, None] ** 2 + radius_x[None, :] ** 2
+        # Fade the face toward the fixed matrix transmission at its outer
+        # edge. The steeper Gaussian makes the vertical oval visible even at
+        # native 960x640 output, while the boundary pixels remain unchanged.
+        matrix_floor = np.clip(1.0 - p["MATRIX_GAP"], 0.0, 1.0)
+        ellipse = matrix_floor + (1.0 - matrix_floor) * np.exp(
+            -2.20 * radius_squared
+        )
+        face_gain = 1.0 + (ellipse - 1.0) * np.clip(dot_rounding, 0.0, 1.0)
+        face_gain = np.where(boundary > 0.5, 1.0, face_gain)
+        base *= face_gain[..., None]
+    masked = base * matrix[..., None]
+    if matrix_bleed > 0.0:
+        spread = (
+            shifted_edge(base, -1, 0)
+            + shifted_edge(base, 1, 0)
+            + shifted_edge(base, 0, -1)
+            + shifted_edge(base, 0, 1)
+        ) * 0.25
+        amount = boundary[..., None] * np.clip(matrix_bleed, 0.0, 1.0)
+        masked = masked * (1.0 - amount) + spread * amount
+    return np.clip(masked, 0.0, 1.0)
 
 
 def label(image: Image.Image, text: str) -> Image.Image:
