@@ -16,7 +16,7 @@
 - [x] Verify APK package name, version, ABI and embedded shader assets.
 - [x] Build and test the bilingual shader-only ZIP.
 - [x] Generate and verify `SHA256SUMS` for every release asset.
-- [ ] Commit and push the shader repository. The modified RetroArch source is
+- [x] Commit and push the shader repository. The modified RetroArch source is
   published at `06cc964`.
-- [ ] Publish the bilingual GitHub v0.1.1 release and upload all assets.
-- [ ] Read back the public release metadata and asset checksums.
+- [x] Publish the bilingual GitHub v0.1.1 release and upload all assets.
+- [x] Read back the public release metadata and asset checksums.
